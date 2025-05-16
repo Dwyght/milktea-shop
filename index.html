@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Milk Tea Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/50" alt="Logo" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active"><i class="icon">🏠</i></a></li>
+                    <li><a href="orders.html"><i class="icon">🛒</i></a></li>
+                    <li><a href="queue.html"><i class="icon">⏰</i></a></li>
+                    <li><a href="sales.html"><i class="icon">📊</i></a></li>
+                    <li><a href="inventory.html"><i class="icon">📱</i></a></li>
+                    <li><a href="users.html"><i class="icon">👥</i></a></li>
+                    <li><a href="#"><i class="icon">↪️</i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content dashboard-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div class="header-left">
+                    <h1>Dashboard</h1>
+                    <p class="current-date">Sunday, May 11, 2025</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-img">
+                    <div class="user-info">
+                        <h3>John Dough</h3>
+                        <p>Admin</p>
+                    </div>
+                    <button class="dropdown-btn">▼</button>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>SALES TODAY</h3>
+                        <span class="trend positive">+12% from yesterday</span>
+                    </div>
+                    <div class="stat-value">₱10,201.00</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>ORDERS TODAY</h3>
+                        <span class="trend positive">+5 from yesterday</span>
+                    </div>
+                    <div class="stat-value">47</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>MOST POPULAR ORDER</h3>
+                        <span class="trend positive">+2% from yesterday</span>
+                    </div>
+                    <div class="stat-value">TARO MILK TEA</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>LOW STOCK</h3>
+                    </div>
+                    <div class="stat-value">White Pearls</div>
+                </div>
+            </div>
+
+            <!-- Charts and Tables Section -->
+            <div class="dashboard-grid">
+                <!-- Sales Overview Chart -->
+                <section class="sales-overview">
+                    <h2>Sales Overview</h2>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Popular Items -->
+                <section class="popular-items">
+                    <h2>Popular Items</h2>
+                    <div class="chart-container">
+                        <canvas id="popularItemsChart"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Recent Orders -->
+            <section class="recent-orders">
+                <h2>Recent Orders</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Time</th>
+                                <th>Customer</th>
+                                <th>Order</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersBody">
+                            <tr>
+                                <td>#1</td>
+                                <td>10:45 AM</td>
+                                <td>Walk-in</td>
+                                <td>2× Taro Milk Tea (L)</td>
+                                <td>₱75</td>
+                                <td><span class="status-tag in-progress">In Progress</span></td>
+                            </tr>
+                            <tr>
+                                <td>#2</td>
+                                <td>10:32 AM</td>
+                                <td>Mark</td>
+                                <td>1× Classic Milk Tea (M), 1× Honeydew Milk (M)</td>
+                                <td>₱75</td>
+                                <td><span class="status-tag completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#3</td>
+                                <td>10:03 AM</td>
+                                <td>Anne</td>
+                                <td>3× Taro Milk Tea (M)</td>
+                                <td>₱75</td>
+                                <td><span class="status-tag completed">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html> 

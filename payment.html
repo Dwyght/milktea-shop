@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Milk Tea Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF9F7B;
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            padding: 2rem;
+            background: #F8F8F8;
+        }
+
+        .payment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .order-details {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .customer-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-info h3 {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .customer-info p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .order-items {
+            margin: 1.5rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-details h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .item-details p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .item-price {
+            font-weight: 500;
+        }
+
+        .order-summary {
+            margin-top: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .total-row {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+
+        .payment-methods {
+            margin-top: 2rem;
+        }
+
+        .payment-methods h2 {
+            margin-bottom: 1rem;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .payment-option {
+            padding: 1.5rem;
+            border: 2px solid #eee;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background: #FFF5F2;
+        }
+
+        .payment-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .confirm-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: background 0.3s ease;
+        }
+
+        .confirm-button:hover {
+            background: #FF8B66;
+        }
+
+        .cash-input {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .cash-input.visible {
+            display: block;
+        }
+
+        .cash-input input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .change-amount {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="nav-items">
+                <div class="nav-item">🏠</div>
+                <div class="nav-item active">🛒</div>
+                <div class="nav-item">⏰</div>
+                <div class="nav-item">📊</div>
+                <div class="nav-item">📱</div>
+                <div class="nav-item">👥</div>
+                <div class="nav-item">↪️</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="payment-container">
+                <div class="order-details">
+                    <h2>Order Details</h2>
+                    <div class="customer-info">
+                        <h3>Customer Name</h3>
+                        <p id="customerName"></p>
+                    </div>
+                    <div class="order-items" id="orderItems">
+                        <!-- Order items will be dynamically added here -->
+                    </div>
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal"></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (8%)</span>
+                            <span id="tax"></span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span>Total</span>
+                            <span id="total"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <h2>Select Payment Method</h2>
+                    <div class="payment-options">
+                        <div class="payment-option" data-method="cash">
+                            <i>💵</i>
+                            <span>Cash</span>
+                        </div>
+                        <div class="payment-option" data-method="card">
+                            <i>💳</i>
+                            <span>Card</span>
+                        </div>
+                        <div class="payment-option" data-method="ewallet">
+                            <i>📱</i>
+                            <span>E-Wallet</span>
+                        </div>
+                    </div>
+
+                    <div class="cash-input" id="cashInput">
+                        <input type="number" placeholder="Enter cash amount" id="cashAmount">
+                        <div class="change-amount" id="changeAmount"></div>
+                    </div>
+
+                    <button class="confirm-button" onclick="confirmPayment()">Confirm Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load order details from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const order = JSON.parse(localStorage.getItem('current_order'));
+            if (!order) {
+                window.location.href = 'orders.html';
+                return;
+            }
+
+            // Display customer name
+            document.getElementById('customerName').textContent = order.customerName;
+
+            // Display order items
+            const orderItems = document.getElementById('orderItems');
+            orderItems.innerHTML = order.items.map(item => `
+                <div class="order-item">
+                    <div class="item-details">
+                        <h4>${item.name} × ${item.quantity}</h4>
+                        <p>
+                            ${item.size}, ${item.sweetness}% sugar, ${item.ice} ice<br>
+                            ${item.addOns.length ? 'Add-ons: ' + item.addOns.join(', ') : 'No add-ons'}
+                        </p>
+                    </div>
+                    <div class="item-price">₱${item.price.toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            // Display totals
+            document.getElementById('subtotal').textContent = `₱${order.subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `₱${order.tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `₱${order.total.toFixed(2)}`;
+        });
+
+        // Payment method selection
+        let selectedMethod = null;
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedMethod = option.dataset.method;
+
+                // Show/hide cash input
+                const cashInput = document.getElementById('cashInput');
+                cashInput.classList.toggle('visible', selectedMethod === 'cash');
+                if (selectedMethod === 'cash') {
+                    document.getElementById('cashAmount').value = '';
+                    document.getElementById('changeAmount').textContent = '';
+                }
+            });
+        });
+
+        // Calculate change
+        document.getElementById('cashAmount').addEventListener('input', (e) => {
+            const order = JSON.parse(localStorage.getItem('current_order'));
+            const cashAmount = parseFloat(e.target.value) || 0;
+            const change = cashAmount - order.total;
+            
+            if (change >= 0) {
+                document.getElementById('changeAmount').textContent = `Change: ₱${change.toFixed(2)}`;
+            } else {
+                document.getElementById('changeAmount').textContent = 'Insufficient amount';
+            }
+        });
+
+        // Confirm payment
+        function confirmPayment() {
+            if (!selectedMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            if (selectedMethod === 'cash') {
+                const cashAmount = parseFloat(document.getElementById('cashAmount').value) || 0;
+                const order = JSON.parse(localStorage.getItem('current_order'));
+                if (cashAmount < order.total) {
+                    alert('Insufficient cash amount.');
+                    return;
+                }
+            }
+
+            const order = JSON.parse(localStorage.getItem('current_order'));
+            
+            // Create the final order with payment details
+            const finalOrder = {
+                ...order,
+                paymentMethod: selectedMethod,
+                paymentStatus: 'completed',
+                orderStatus: 'preparing',
+                orderId: `ORD${Date.now()}`,
+                paymentTimestamp: new Date().toISOString()
+            };
+
+            // Save to orders history
+            const ordersHistory = JSON.parse(localStorage.getItem('orders_history') || '[]');
+            ordersHistory.push(finalOrder);
+            localStorage.setItem('orders_history', JSON.stringify(ordersHistory));
+
+            // Clear the cart
+            localStorage.removeItem('milktea_cart');
+            localStorage.removeItem('current_order');
+
+            // Redirect to queue page
+            window.location.href = 'queue.html';
+        }
+    </script>
+</body>
+</html> 
+</html> 

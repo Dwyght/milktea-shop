@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue - Milk Tea Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF9F7B;
+            --text-color: #333;
+            --border-radius: 12px;
+            --background-color: #F8F9FB;
+            --card-background: #FFFFFF;
+            --status-in-progress: #FFE7BA;
+            --status-completed: #E8F5E9;
+            --text-secondary: #6B7280;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            padding: 2rem 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--card-background);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .user-info p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .order-count {
+            background: var(--status-in-progress);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            color: #B45309;
+        }
+
+        .order-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .order-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .status-badge {
+            background: var(--status-in-progress);
+            color: #B45309;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .customer-info {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .order-items {
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-addons {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            margin-top: 0.25rem;
+        }
+
+        .item-size {
+            text-align: right;
+            color: var(--text-secondary);
+        }
+
+        .complete-order-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .complete-order-btn:hover {
+            background: #FF8B66;
+        }
+
+        .completed-orders {
+            margin-top: 3rem;
+        }
+
+        .completed-orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .completed-orders-table th {
+            text-align: left;
+            padding: 1rem;
+            background: #F9FAFB;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .completed-orders-table td {
+            padding: 1rem;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.875rem;
+        }
+
+        .completed-status {
+            color: #059669;
+            background: var(--status-completed);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        .empty-queue {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+        }
+
+        /* Update sidebar styles to match index.html */
+        .sidebar {
+            background: var(--card-background);
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+        }
+
+        .logo {
+            margin-bottom: 2rem;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/50" alt="Logo" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="icon">🏠</i></a></li>
+                    <li><a href="orders.html"><i class="icon">🛒</i></a></li>
+                    <li><a href="queue.html" class="active"><i class="icon">⏰</i></a></li>
+                    <li><a href="sales.html"><i class="icon">📊</i></a></li>
+                    <li><a href="inventory.html"><i class="icon">📱</i></a></li>
+                    <li><a href="users.html"><i class="icon">👥</i></a></li>
+                    <li><a href="#"><i class="icon">↪️</i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Order Queue</h1>
+                <div class="user-profile">
+                    <img src="profile.png" alt="Profile">
+                    <div class="user-info">
+                        <h3>John Dough</h3>
+                        <p>Cashier</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Orders Section -->
+            <div class="active-orders">
+                <div class="section-title">
+                    <h2>Active Orders</h2>
+                    <span class="order-count" id="activeCount">0</span>
+                </div>
+                <div id="activeOrders">
+                    <!-- Active orders will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Completed Orders Section -->
+            <div class="completed-orders">
+                <div class="section-title">
+                    <h2>Completed Orders</h2>
+                    <span class="order-count" id="completedCount">0</span>
+                </div>
+                <table class="completed-orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="completedOrders">
+                        <!-- Completed orders will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Format time function
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        // Format order items
+        function formatOrderItems(items) {
+            return items.map(item => `
+                <div class="order-item">
+                    <div class="item-details">
+                        ${item.quantity}× ${item.name}
+                        <div class="item-addons">
+                            ${item.addOns.length ? '+ ' + item.addOns.join(', ') : ''}
+                        </div>
+                    </div>
+                    <div class="item-size">${item.size}</div>
+                </div>
+            `).join('');
+        }
+
+        // Update queue display
+        function updateQueueDisplay() {
+            const orders = JSON.parse(localStorage.getItem('orders_history') || '[]');
+            const activeOrders = orders.filter(order => order.orderStatus === 'preparing');
+            const completedOrders = orders.filter(order => order.orderStatus === 'completed');
+
+            // Update counts
+            document.getElementById('activeCount').textContent = activeOrders.length;
+            document.getElementById('completedCount').textContent = completedOrders.length;
+
+            // Update active orders
+            const activeOrdersContainer = document.getElementById('activeOrders');
+            if (activeOrders.length === 0) {
+                activeOrdersContainer.innerHTML = '<div class="empty-queue">No active orders</div>';
+            } else {
+                activeOrdersContainer.innerHTML = activeOrders.map((order, index) => `
+                    <div class="order-card" data-order-id="${order.orderId}">
+                        <div class="order-header">
+                            <span class="order-number">#${String(index + 1).padStart(2, '0')}</span>
+                            <span class="status-badge">In progress</span>
+                        </div>
+                        <div class="customer-info">
+                            Customer: ${order.customerName}<br>
+                            Time: ${formatTime(order.paymentTimestamp)}
+                        </div>
+                        <div class="order-items">
+                            ${formatOrderItems(order.items)}
+                        </div>
+                        <button class="complete-order-btn" onclick="completeOrder('${order.orderId}')">
+                            Complete Order
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            // Update completed orders
+            const completedOrdersContainer = document.getElementById('completedOrders');
+            if (completedOrders.length === 0) {
+                completedOrdersContainer.innerHTML = '<tr><td colspan="4" class="empty-queue">No completed orders</td></tr>';
+            } else {
+                completedOrdersContainer.innerHTML = completedOrders.map(order => `
+                    <tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.customerName}</td>
+                        <td>${order.items.map(item => `${item.quantity}× ${item.name}`).join(', ')}</td>
+                        <td><span class="completed-status">Completed</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Complete order
+        function completeOrder(orderId) {
+            const orders = JSON.parse(localStorage.getItem('orders_history') || '[]');
+            const updatedOrders = orders.map(order => {
+                if (order.orderId === orderId) {
+                    return {
+                        ...order,
+                        orderStatus: 'completed',
+                        completedTimestamp: new Date().toISOString()
+                    };
+                }
+                return order;
+            });
+            localStorage.setItem('orders_history', JSON.stringify(updatedOrders));
+            updateQueueDisplay();
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateQueueDisplay();
+            // Update queue every 30 seconds
+            setInterval(updateQueueDisplay, 30000);
+        });
+    </script>
+</body>
+</html> 

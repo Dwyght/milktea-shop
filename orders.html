@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - Milk Tea Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF9F7B;
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #F8F8F8;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80px 1fr 350px;
+            min-height: 100vh;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            background: white;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .nav-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            margin-right: 2rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: #EFEFEF;
+            font-size: 1rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Menu Section */
+        .menu-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-grid {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            min-width: 200px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item.selected {
+            border-color: var(--primary-color);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .menu-item .price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Customization Options */
+        .options-section {
+            margin-top: 2rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group h3 {
+            margin-bottom: 1rem;
+        }
+
+        .options-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .option-button {
+            padding: 0.5rem 1rem;
+            border: 2px solid #DDD;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-button.selected {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .add-ons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .add-on-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .quantity-control button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #DDD;
+            background: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .quantity-control span {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            padding: 2rem;
+            border-left: 1px solid #EEE;
+        }
+
+        .order-summary h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-name {
+            margin-bottom: 2rem;
+        }
+
+        .customer-name input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #DDD;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+
+        .order-items {
+            margin-bottom: 2rem;
+            min-height: 200px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .proceed-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .proceed-button:hover {
+            background: #FF8B66;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="nav-items">
+                <div class="nav-item">🏠</div>
+                <div class="nav-item active">🛒</div>
+                <div class="nav-item">⏰</div>
+                <div class="nav-item">📊</div>
+                <div class="nav-item">📱</div>
+                <div class="nav-item">👥</div>
+                <div class="nav-item">↪️</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search menu...">
+                </div>
+                <div class="user-profile">
+                    <img src="profile.png" alt="Profile">
+                    <div class="user-info">
+                        <h3>John Dough</h3>
+                        <p>Cashier</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h2>Select Milktea Base</h2>
+                <div class="menu-grid" id="menuGrid">
+                    <!-- Menu items will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="options-section">
+                <div class="option-group">
+                    <h3>Size</h3>
+                    <div class="options-grid">
+                        <button class="option-button selected" data-size="small">Small</button>
+                        <button class="option-button" data-size="medium">Medium + ₱30</button>
+                        <button class="option-button" data-size="large">Large + ₱40</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Sweetness Level</h3>
+                    <div class="options-grid">
+                        <button class="option-button" data-sweetness="0">0%</button>
+                        <button class="option-button" data-sweetness="30">30%</button>
+                        <button class="option-button selected" data-sweetness="50">50%</button>
+                        <button class="option-button" data-sweetness="70">70%</button>
+                        <button class="option-button" data-sweetness="100">100%</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Ice Level</h3>
+                    <div class="options-grid">
+                        <button class="option-button selected" data-ice="no">No Ice</button>
+                        <button class="option-button" data-ice="less">Less Ice</button>
+                        <button class="option-button" data-ice="regular">Regular</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Add-ons (₱15 each)</h3>
+                    <div class="add-ons">
+                        <div class="add-on-item">
+                            <input type="checkbox" id="blackPearl">
+                            <label for="blackPearl">Black Pearl</label>
+                        </div>
+                        <div class="add-on-item">
+                            <input type="checkbox" id="whitePearl">
+                            <label for="whitePearl">White Pearl</label>
+                        </div>
+                        <div class="add-on-item">
+                            <input type="checkbox" id="cheesecake">
+                            <label for="cheesecake">Cheesecake Cream</label>
+                        </div>
+                        <div class="add-on-item">
+                            <input type="checkbox" id="dragonFruit">
+                            <label for="dragonFruit">Dragon Fruit Jelly</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quantity-control">
+                    <button onclick="decrementQuantity()">-</button>
+                    <span id="quantity">4</span>
+                    <button onclick="incrementQuantity()">+</button>
+                    <button class="proceed-button" onclick="addToCart()" style="margin-left: auto; width: 200px;">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="customer-name">
+                <input type="text" placeholder="Enter Customer Name">
+            </div>
+            <div class="order-items" id="orderItems">
+                <!-- Order items will be dynamically added here -->
+                <div class="empty-cart">No items in order yet</div>
+            </div>
+            <div class="summary-item">
+                <span>Subtotal</span>
+                <span>₱0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Tax (8%)</span>
+                <span>₱0.00</span>
+            </div>
+            <div class="summary-item total-amount">
+                <span>Total</span>
+                <span>₱0.00</span>
+            </div>
+            <button class="proceed-button" onclick="proceedToPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script src="orders.js"></script>
+</body>
+</html> 

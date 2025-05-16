@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report - Milk Tea Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sales.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container sales-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/50" alt="Logo" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" ><i class="icon">🏠</i></a></li>
+                    <li><a href="orders.html"><i class="icon">🛒</i></a></li>
+                    <li><a href="queue.html"><i class="icon">⏰</i></a></li>
+                    <li><a href="sales.html" class="active"><i class="icon">📊</i></a></li>
+                    <li><a href="inventory.html"><i class="icon">📱</i></a></li>
+                    <li><a href="users.html"><i class="icon">👥</i></a></li>
+                    <li><a href="#"><i class="icon">↪️</i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content sales-content">
+            <!-- Header -->
+            <div class="sales-header">
+                <h1>Sales Report</h1>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-img">
+                    <div class="user-info">
+                        <h3>John Dough</h3>
+                        <p>Cashier</p>
+                    </div>
+                    <button class="dropdown-btn">▼</button>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <section class="filter-section">
+                <h2>Filter Report</h2>
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="dateFrom">Date From</label>
+                        <input type="date" id="dateFrom" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <label for="dateTo">Date To</label>
+                        <input type="date" id="dateTo" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <label for="product">Product</label>
+                        <select id="product" class="filter-input">
+                            <option value="all">All Products</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="cashier">Cashier</label>
+                        <select id="cashier" class="filter-input">
+                            <option value="all">All Cashiers</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sales Summary -->
+            <section class="sales-summary">
+                <h2>Sales Summary (<span id="summaryDateRange">May 10 - May 14, 2025</span>)</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h3>Total Sales</h3>
+                        <p class="amount">₱<span id="totalSales">0.00</span></p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Total Orders</h3>
+                        <p class="amount">₱<span id="totalOrders">0.00</span></p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Average Order Value</h3>
+                        <p class="amount">₱<span id="averageOrder">0.00</span></p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Top Product</h3>
+                        <p class="amount">₱<span id="topProduct">0.00</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <!-- Sales Overview Chart -->
+                <section class="chart-section">
+                    <h2>Sales Overview</h2>
+                    <div class="chart-container">
+                        <canvas id="salesOverviewChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Popular Items Chart -->
+                <section class="chart-section">
+                    <h2>Popular Items</h2>
+                    <div class="chart-container">
+                        <canvas id="popularItemsChart"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sales Table -->
+            <section class="sales-table">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date & Time</th>
+                                <th>Products</th>
+                                <th>Quantity</th>
+                                <th>Name</th>
+                                <th>Payment Method</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <!-- Sales data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="sales.js"></script>
+</body>
+</html> 
